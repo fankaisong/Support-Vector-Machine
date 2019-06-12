@@ -12,9 +12,9 @@ class SVM:
         for e in range(epoch):
             
             sum = 0
-            for x in train:
-                sum += max(0,1-np.dot(x,self.weight))
-            loss = lambda_v*np.linalg.norm(self.weight)**2 + sum
+            for i in range(feature_size):
+                sum += max(0,1-label[i]*np.dot(train[i],self.weight))
+            loss = lambda_v*pow(np.linalg.norm(self.weight),2)/2 + sum
             
             print("Epoch {}/{}: Loss is {}".format(e+1,epoch,loss))
             

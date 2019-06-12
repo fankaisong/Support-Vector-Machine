@@ -47,8 +47,8 @@ label_test = np.array(label_test)
 # In[208]:
 
 
-a = 0.0001
-epoch = 37
+a = 0.01
+epoch = 8000
 svm = SVM()
 svm.train(feature_train, label_train,epoch, a)
 
