@@ -52,13 +52,9 @@ epoch = 8000
 svm = SVM()
 svm.train(feature_train, label_train,epoch, a)
 
-res = svm.predict(feature_test)
-count = 0
+res,acc = svm.predict(feature_test,label_test)
 
-for i in range(len(label_test)):
-    if(label_test[i] * res[i] >0):
-        count += 1
-print(count/len(label_test))
+print(acc)
 
 
 

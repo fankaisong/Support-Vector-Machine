@@ -26,12 +26,17 @@ class SVM:
                 else:
                     self.weight = self.weight + alpha*(label[i]*train[i] - 2*lambda_v*self.weight)
                 
-    def predict(self,test):
+    def predict(self,test,target):
         
         res = []
         
         for t in test:
             res.append(np.dot(t,self.weight))
-        
-        return res
-        
+
+        count = 0
+
+        for i in range(len(target)):
+            if (target[i] * res[i] > 0):
+                count += 1
+
+        return res,count/len(target)
