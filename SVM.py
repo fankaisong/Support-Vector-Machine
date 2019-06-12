@@ -1,22 +1,24 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 class SVM:
-    def train(self, train, label, epoch, alpha):
+    def train(self, train, label, epoch, alpha, verbose):
         feature_size = len(train[0]) 
         data_size = len(train)
         lambda_v = 1/epoch
-        
+
         self.weight = np.ones(feature_size)
         
         
         for e in range(epoch):
             
-            sum = 0
-            for i in range(feature_size):
-                sum += max(0,1-label[i]*np.dot(train[i],self.weight))
-            loss = lambda_v*pow(np.linalg.norm(self.weight),2)/2 + sum
-            
-            print("Epoch {}/{}: Loss is {}".format(e+1,epoch,loss))
+            if verbose==1:
+                sum = 0
+                for i in range(feature_size):
+                    sum += max(0,1-label[i]*np.dot(train[i],self.weight))
+                loss = lambda_v*pow(np.linalg.norm(self.weight),2)/2 + sum
+                
+                print("Epoch {}/{}: Loss is {}".format(e+1,epoch,loss))
             
             for i in range(data_size):
                 p = label[i] * np.dot(train[i],self.weight) 
@@ -40,3 +42,23 @@ class SVM:
                 count += 1
 
         return res,count/len(target)
+
+    def graph(self, x, y):
+
+        left = max(x)
+        right = min(x)
+        w1 = self.weight[0]
+        w2 = self.weight[1]        
+        xx = np.linspace(left, right)
+        yy = (-1*w1)*xx / w2
+        
+        plt.scatter(x,y)
+        plt.plot(xx, yy)
+        plt.show()
+
+
+
+
+
+
+

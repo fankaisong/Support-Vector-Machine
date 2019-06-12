@@ -35,7 +35,8 @@ label = [1]*50 + [-1]*50
 #shuffle
 feature, label = shuffle(feature,label)
 #split dataset into 90% for training and 10% validation
-feature_train, feature_test, label_train, label_test = train_test_split(feature, label, test_size=0.1)
+feature_train, feature_test, label_train, label_test = train_test_split(feature, label, test_size=0.3)
+
 
 feature_train = np.array(feature_train)
 label_train = np.array(label_train)
@@ -47,17 +48,15 @@ label_test = np.array(label_test)
 # In[208]:
 
 
-a = 0.01
-epoch = 8000
+
+a = 0.001
+epoch = 80
 svm = SVM()
-svm.train(feature_train, label_train,epoch, a)
+svm.train(feature_train, label_train, epoch, a, verbose = 0)
 
 res,acc = svm.predict(feature_test,label_test)
 
-print(acc)
-
-
-
+svm.graph(sepalLength,sepalWidth)
 
 
 
