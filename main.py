@@ -49,14 +49,26 @@ label_test = np.array(label_test)
 
 
 
-a = 0.001
-epoch = 80
+a = 0.0001
+epoch = 400
 svm = SVM()
-svm.train(feature_train, label_train, epoch, a, verbose = 0)
+svm.train(feature_train, label_train, epoch, a, verbose = 1)
 
 res,acc = svm.predict(feature_test,label_test)
 
-svm.graph(sepalLength,sepalWidth)
+print(acc)
+
+left = max(sepalLength)
+right = min(sepalLength)
+w1 = svm.weight[0]
+w2 = svm.weight[1]        
+xx = np.linspace(left, right)
+yy = (-1*w1)*xx / w2
+
+plt.scatter(sepalLength[:50],sepalWidth[:50],color='green')
+plt.scatter(sepalLength[50:],sepalWidth[50:], color='red')
+plt.plot(xx, yy)
+plt.show()
 
 
 

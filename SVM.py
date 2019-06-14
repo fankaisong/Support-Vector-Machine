@@ -15,15 +15,15 @@ class SVM:
             if verbose==1:
                 sum = 0
                 for i in range(feature_size):
-                    sum += max(0,1-label[i]*np.dot(train[i],self.weight))
+                    sum += max(0,1-label[i]*(np.dot(train[i],self.weight))) #max(0,y<x,w>)
                 loss = lambda_v*pow(np.linalg.norm(self.weight),2)/2 + sum
                 
                 print("Epoch {}/{}: Loss is {}".format(e+1,epoch,loss))
             
             for i in range(data_size):
-                p = label[i] * np.dot(train[i],self.weight) 
+                p = label[i] * (np.dot(train[i],self.weight)) # y<x,w>
     
-                if p >= 0: #prediction is correct
+                if p >= 0.5: #prediction is correct
                     self.weight = self.weight - alpha*(2*lambda_v*self.weight)
                 else:
                     self.weight = self.weight + alpha*(label[i]*train[i] - 2*lambda_v*self.weight)
@@ -43,18 +43,9 @@ class SVM:
 
         return res,count/len(target)
 
-    def graph(self, x, y):
 
-        left = max(x)
-        right = min(x)
-        w1 = self.weight[0]
-        w2 = self.weight[1]        
-        xx = np.linspace(left, right)
-        yy = (-1*w1)*xx / w2
-        
-        plt.scatter(x,y)
-        plt.plot(xx, yy)
-        plt.show()
+
+
 
 
 
